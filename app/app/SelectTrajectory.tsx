@@ -145,7 +145,6 @@ export default function SelectTrajectory() {
                  "
                             disabled={selectedTrajectory === -1 || start}
                             onClick={startMotionProcess}
-
                         >
                             Start Motion
                         </button>

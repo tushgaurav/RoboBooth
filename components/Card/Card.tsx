@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Trajectory } from '@/app/SelectTrajectory'
+import type { Trajectory } from '@/app/app/SelectTrajectory'
 import clsx from 'clsx';
 
 export const CardContext = React.createContext({
