@@ -1,0 +1,55 @@
+[robot]
+home_pose = [
+    -28.50645661157023,
+    -116.68104338842976,
+    99.98700495049502,
+    -145.60378086419752,
+    115.55516975308642,
+    -9.981867283950617,
+]
+
+mechanical_home = [
+    -129.109,
+    -126.685,
+    154.075,
+    -172.006,
+    45.048,
+    34.24,
+]
+ip = "192.168.1.200"
+
+[[motions]]
+index = 1
+title = "Birthday Bash"
+image = "/image.png"
+alt = "robot moving"
+description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
+file_name = "birthday.jbi"
+duration = 10
+
+[[motions]]
+index = 2
+title = "Swirl Special"
+image = "/image.png"
+alt = "robot moving"
+description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
+file_name = "swirltesting.jbi"
+duration = 8
+
+[[motions]]
+index = 3
+title = "Sing Along Karoke"
+image = "/image.png"
+alt = "robot moving"
+description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
+file_name = "sing.jbi"
+duration = 20
+
+[[motions]]
+index = 4
+title = "To The Moon"
+image = "/image.png"
+alt = "robot moving"
+description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
+file_name = "moon.jbi"
+duration = 6

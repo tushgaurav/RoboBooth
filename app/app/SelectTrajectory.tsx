@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Button from "@/components/Button";
 import Card from "@/components/Card/Card";
 import CardBody from "@/components/Card/CardBody";
@@ -9,52 +9,10 @@ import CardTitle from "@/components/Card/CardTitle";
 import CardImage from "@/components/Card/CardImage";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Trajectory } from "./Trajectory";
 
-export type Trajectory = {
-    index: number;
-    image: string;
-    alt: string;
-    title: string;
-    duration: string;
-    description: string;
-}
 
-const TRAJECTORY: Trajectory[] = [
-    {
-        index: 1,
-        image: "/image.png",
-        alt: "card-image",
-        title: "Rotating Trajectory",
-        duration: "10",
-        description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case."
-    },
-    {
-        index: 2,
-        image: "/image.png",
-        alt: "card-image",
-        title: "Dancing Robot",
-        duration: "6",
-        description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case."
-    },
-    {
-        index: 3,
-        image: "/image.png",
-        alt: "card-image",
-        title: "Top Down Views",
-        duration: "12",
-        description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case."
-    },
-    {
-        index: 4,
-        image: "/image.png",
-        alt: "card-image",
-        title: "Slow Motion",
-        duration: "5",
-        description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case."
-    }
-]
-
-export default function SelectTrajectory() {
+export default function SelectTrajectory({ trajectory, server_url }: { trajectory: Trajectory[], server_url: string }) {
     const router = useRouter();
     const [selectedTrajectory, setSelectedTrajectory] = useState(-1);
     const [start, setStart] = useState(false);
@@ -68,18 +26,20 @@ export default function SelectTrajectory() {
             }, 1000);
         } else if (seconds === 0) {
             startMotionProcess();
+            sendStartMotionRequest();
         }
         return () => clearInterval(timer);
     }, [start, seconds]);
 
     const sendStartMotionRequest = async () => {
+        console.log('Sending POST request to start motion')
         try {
-            const response = await fetch('http://localhost:5000/start-motion', {
+            const response = await fetch(`${server_url}/start_motion`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ trajectory: selectedTrajectory }),
+                body: JSON.stringify(trajectory[selectedTrajectory - 1]),
             })
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -101,7 +61,7 @@ export default function SelectTrajectory() {
                 !start ? (
                     (
                         <div className="grid grid-cols-3 gap-4 w-max m-auto">
-                            {TRAJECTORY.map((item, index) => {
+                            {trajectory.map((item, index) => {
                                 return (
                                     <Card key={index} currentSelectedIndex={selectedTrajectory} index={item.index} setIndex={setSelectedTrajectory} trajectoryData={item}>
                                         <CardImage source={item.image} alt={item.alt} />
@@ -129,7 +89,7 @@ export default function SelectTrajectory() {
             <div className=" w-full">
                 <div className="flex justify-between items-center p-4 mt-8 max-w-6xl mx-auto">
                     <h3 className="text-lg">You have selected {
-                        selectedTrajectory === -1 ? 'No trajectory selected' : TRAJECTORY[selectedTrajectory - 1].title
+                        selectedTrajectory === -1 ? 'No trajectory selected' : trajectory[selectedTrajectory - 1].title
                     } trajectory.</h3>
 
                     <div className="space-x-3">
