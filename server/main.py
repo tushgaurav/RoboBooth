@@ -69,9 +69,13 @@ async def motion_list():
 
 @app.post("/start_motion")
 async def start_motion(trajectory: Trajectory):
-    print(trajectory)
+    file_name = trajectory.file_name
 
-    return {"result": "success"}
+    if (photobot.checkJbiExist(file_name)):
+        result = photobot.runJbi(file_name)
+        return {"result": result}
+    else:
+        return {"result": "File not found"}
 
 
 @app.post("/emergency_stop")

@@ -12,7 +12,7 @@ export default function Card({ currentSelectedIndex, index, setIndex, trajectory
     console.log("SELECTED INDEX", index)
     console.log("CURRENT SELECTED:", trajectoryData.index === index)
 
-    const classes = clsx("relative flex flex-col text-gray-700 shadow-md bg-clip-border rounded-xl w-96", {
+    const classes = clsx("relative flex flex-col text-gray-700 shadow-md bg-clip-border rounded-xl w-96 ", {
         "bg-pink-300": trajectoryData.index == currentSelectedIndex,
         "bg-white": trajectoryData.index !== currentSelectedIndex
     })

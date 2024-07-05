@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
+import Slider from "react-slick";
 import Button from "@/components/Button";
 import Card from "@/components/Card/Card";
 import CardBody from "@/components/Card/CardBody";
@@ -10,7 +11,6 @@ import CardImage from "@/components/Card/CardImage";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Trajectory } from "./Trajectory";
-
 
 export default function SelectTrajectory({ trajectory, server_url }: { trajectory: Trajectory[], server_url: string }) {
     const router = useRouter();
@@ -54,13 +54,40 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
         setStart(true);
     }
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 1
+                }
+            }
+        ]
+    };
+
     return (
         <div className="">
             <h1 className="text-xl font-semibold text-center p-4 m-4 mt-20">Select Trajectory</h1>
             {
                 !start ? (
                     (
-                        <div className="grid grid-cols-3 gap-4 w-max m-auto">
+                        <Slider {...settings} className="m-auto p-4 max-w-6xl">
                             {trajectory.map((item, index) => {
                                 return (
                                     <Card key={index} currentSelectedIndex={selectedTrajectory} index={item.index} setIndex={setSelectedTrajectory} trajectoryData={item}>
@@ -73,18 +100,16 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
                                     </Card>
                                 )
                             })}
-                        </div>
+                        </Slider>
                     )
                 ) : (
-                    <div className="flex flex-col items-center justify-center h-90">
-                        <div className="text-6xl font-bold text-gray-800 h-max">
+                    <div className="flex flex-col items-center justify-center h-[60vh]">
+                        <div className="text-6xl font-bold text-gray-800 ">
                             {seconds > 0 ? seconds : 'Starting!'}
                         </div>
                     </div>
                 )
             }
-
-
 
             <div className=" w-full">
                 <div className="flex justify-between items-center p-4 mt-8 max-w-6xl mx-auto">
