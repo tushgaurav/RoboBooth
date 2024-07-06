@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import Button from "@/components/Button";
@@ -11,12 +12,14 @@ import CardImage from "@/components/Card/CardImage";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Trajectory } from "./Trajectory";
+import Image from "next/image";
 
 export default function SelectTrajectory({ trajectory, server_url }: { trajectory: Trajectory[], server_url: string }) {
     const router = useRouter();
     const [selectedTrajectory, setSelectedTrajectory] = useState(-1);
+    const [currentSlide, setCurrentSlide] = useState(0);
     const [start, setStart] = useState(false);
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(5);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -55,104 +58,75 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
     }
 
     const settings = {
-        dots: true,
+        centerMode: true,
         infinite: true,
+        slidesToShow: 4,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    initialSlide: 1
-                }
-            }
-        ]
+        draggable: true,
+        beforeChange: (current: number, next: number) => {
+            console.log('Before change:', current, next);
+            setSelectedTrajectory(next + 1);
+            setCurrentSlide(next);
+        },
     };
 
     return (
-        <div className="">
-            <h1 className="text-xl font-semibold text-center p-4 m-4 mt-20">Select Trajectory</h1>
+        <>
             {
                 !start ? (
                     (
-                        <Slider {...settings} className="m-auto p-4 max-w-6xl">
+                        <Slider {...settings} >
                             {trajectory.map((item, index) => {
                                 return (
-                                    <Card key={index} currentSelectedIndex={selectedTrajectory} index={item.index} setIndex={setSelectedTrajectory} trajectoryData={item}>
-                                        <CardImage source={item.image} alt={item.alt} />
-                                        <CardTitle titleText={item.title} duration={item.duration} />
-                                        <CardBody>
-                                            {item.description}
-                                        </CardBody>
-                                        <CardButton text="Select Motion" />
-                                    </Card>
+
+                                    <div>
+                                        <div key={index} className={`p-2 w-[320px] ${index === currentSlide ? 'border-2 border-yellow-600 rounded-3xl' : ''}`}>
+                                            <div className="rounded-3xl" style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', width: "300px", height: "400px" }}></div>
+                                            {index === currentSlide && (
+                                                <h1 className="text-lg text-center p-2">{item.title}</h1>
+                                            )}
+                                        </div>
+                                    </div>
                                 )
                             })}
                         </Slider>
+
                     )
                 ) : (
                     <div className="flex flex-col items-center justify-center h-[60vh]">
                         <div className="text-6xl font-bold text-gray-800 ">
-                            {seconds > 0 ? seconds : 'Starting!'}
+                            {/* {seconds > 0 ? (
+                                <div className="p-10 bg-white rounded-full">{seconds}</div>
+                                ) : 'Starting!'} */}
+                            <div className="w-8 h-8 bg-white rounded-full">{seconds}</div>
                         </div>
                     </div>
                 )
             }
+            <div className="m-auto p-4 max-w-6xl">
+                <div className=" w-full">
+                    <div className="flex justify-between items-center p-4 mt-8 max-w-6xl mx-auto">
+                        <h3 className="text-lg">You have selected {
+                            selectedTrajectory === -1 ? 'No trajectory selected' : trajectory[selectedTrajectory - 1].title
+                        } trajectory.</h3>
 
-            <div className=" w-full">
-                <div className="flex justify-between items-center p-4 mt-8 max-w-6xl mx-auto">
-                    <h3 className="text-lg">You have selected {
-                        selectedTrajectory === -1 ? 'No trajectory selected' : trajectory[selectedTrajectory - 1].title
-                    } trajectory.</h3>
-
-                    <div className="space-x-3">
-                        <button className="
-                        px-4 py-2 text-lg
-                        bg-pink-500 text-white rounded-full
-                        hover:bg-pink-600
-                        focus:outline-none
-                        focus:ring-2 focus:ring-pink-600
-                        focus:ring-opacity-50
-                        disabled:opacity-50
-                        disabled:cursor-not-allowed
-                 "
-                            disabled={selectedTrajectory === -1 || start}
-                            onClick={startMotionProcess}
-                        >
-                            Start Motion
-                        </button>
-                        {
-                            start && (
-                                <Link className="
-                                px-6 py-3 text-lg
-                                bg-pink-800 text-white rounded-full
-                                focus:outline-none
-                                focus:ring-2 focus:ring-red-600
-                                focus:ring-opacity-50
-                                disabled:opacity-50
-                                disabled:cursor-not-allowed
-                            "
-                                    href="/experience"
-                                >
-                                    Next
-                                </Link>
-                            )
-                        }
+                        <div className="space-x-3">
+                            {selectedTrajectory === -1 || start ? "" : <Button onClick={startMotionProcess}>Start Motion</Button>}
+                            {
+                                start && (
+                                    <Button>
+                                        <Link
+                                            href="/"
+                                        >
+                                            Next
+                                        </Link>
+                                    </Button>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

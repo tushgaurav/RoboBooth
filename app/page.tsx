@@ -1,6 +1,8 @@
 import { Metadata } from "next"
 import IntroVideo from "./IntroVideo"
 import Link from "next/link"
+import Nav from "@/components/Nav";
+import Button from "@/components/Button"
 
 export const metadata: Metadata = {
     title: "Orangewood Labs - PhotoBooth",
@@ -9,26 +11,19 @@ export const metadata: Metadata = {
 
 export default function Page() {
     return (
-        <div className="mt-20">
-            <IntroVideo />
+
+        <div className="w-screen h-screen" style={{ backgroundImage: `url(/ui_images/home.gif)`, backgroundSize: 'cover' }}>
+            <Nav />
+            {/* <IntroVideo /> */}
 
             <div className="flex justify-center items-center">
-                <Link className="
-                    bg-pink-500
-                    hover:bg-pink-700
-                    text-white
-                    font-bold
-                    py-2
-                    px-4
-                    rounded-full
-                    mt-4
-                    text-2xl
-                "
-                    href="/app"
-                >
-                    Start
-                </Link>
+                <Button>
+                    <Link href="/app">
+                        Start Motion
+                    </Link>
+                </Button>
             </div>
         </div>
+
     )
 }

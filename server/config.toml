@@ -20,8 +20,8 @@ ip = "192.168.1.200"
 
 [[motions]]
 index = 1
-title = "Birthday Bash"
-image = "/image.png"
+title = "Ariana Grande"
+image = "/ui_images/robot_motion/ariana_grande.gif"
 alt = "robot moving"
 description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
 file_name = "birthday.jbi"
@@ -30,7 +30,7 @@ duration = 10
 [[motions]]
 index = 2
 title = "Swirl Special"
-image = "/image.png"
+image = "/ui_images/robot_motion/motion1.png"
 alt = "robot moving"
 description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
 file_name = "swirltesting.jbi"
@@ -38,8 +38,8 @@ duration = 8
 
 [[motions]]
 index = 3
-title = "Sing Along Karoke"
-image = "/image.png"
+title = "Taylor Swift"
+image = "/ui_images/robot_motion/taylor_swift.gif"
 alt = "robot moving"
 description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
 file_name = "sing.jbi"
@@ -48,7 +48,16 @@ duration = 20
 [[motions]]
 index = 4
 title = "To The Moon"
-image = "/image.png"
+image = "/ui_images/robot_motion/motion2.png"
+alt = "robot moving"
+description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
+file_name = "moon.jbi"
+duration = 6
+
+[[motions]]
+index = 4
+title = "To The Moon"
+image = "/ui_images/robot_motion/motion2.png"
 alt = "robot moving"
 description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
 file_name = "moon.jbi"

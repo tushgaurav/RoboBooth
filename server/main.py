@@ -20,7 +20,7 @@ class Trajectory(BaseModel):
 
 
 photobot = product2(config["robot"]["ip"])
-result, _ = photobot.connect()
+# result, _ = photobot.connect()
 
 app = FastAPI()
 

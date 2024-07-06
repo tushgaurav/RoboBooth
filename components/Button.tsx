@@ -1,13 +1,10 @@
-enum ButtonVariant {
-    Primary = 'primary',
-    Secondary = 'secondary',
-    Tertiary = 'tertiary',
-}
 
-export default function Button({ variant, children, ...props }: { variant: "primary" | "secondary", children: React.ReactNode }) {
+export default function Button({ variant = 'primary', children, ...props }: { variant?: "primary" | "secondary", children: React.ReactNode }) {
+    const styles = ``
+
     return (
-        <button className={`px-4 py-2 text-lg`} {...props}>
+        <button className={"px-16 py-4 bg-white text-black text-lg rounded-lg"} {...props}>
             {children}
         </button>
     )
-}
+} 

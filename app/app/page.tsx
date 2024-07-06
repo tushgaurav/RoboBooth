@@ -1,3 +1,4 @@
+import Nav from "@/components/Nav";
 import { Metadata } from "next";
 import Image from "next/image";
 import SelectTrajectory from "./SelectTrajectory";
@@ -23,8 +24,15 @@ export default async function Home() {
 
 
   return (
-    <div>
-      <SelectTrajectory trajectory={TRAJECTORY} server_url={SERVER_URL} />
+    <div className="w-screen h-screen" style={{ backgroundImage: `url(/ui_images/app_bg.gif)`, backgroundSize: 'cover' }}>
+      <div className="w-screen h-screen" style={{ backgroundColor: 'rgba(0,0,0, 0.6' }}>
+        <Nav title="Select Trajectory" />
+
+        <div>
+          <SelectTrajectory trajectory={TRAJECTORY} server_url={SERVER_URL} />
+        </div>
+
+      </div>
     </div>
   );
 }
