@@ -3,7 +3,7 @@ export default function Button({ variant = 'primary', children, ...props }: { va
     const styles = ``
 
     return (
-        <button className={"px-16 py-4 bg-white text-black text-lg rounded-lg"} {...props}>
+        <button className={"slide-bck-center tracking-in-expand-fwd px-16 py-4 bg-white text-black text-lg rounded-lg"} {...props}>
             {children}
         </button>
     )

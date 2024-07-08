@@ -16,7 +16,7 @@ export default function Page() {
             <Nav />
             {/* <IntroVideo /> */}
 
-            <div className="flex justify-center items-center">
+            <div className="h-full max-h-[90vh] flex flex-col  items-center justify-end">
                 <Button>
                     <Link href="/app">
                         Start Motion

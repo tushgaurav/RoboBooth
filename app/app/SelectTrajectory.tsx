@@ -3,6 +3,9 @@
 
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
+import { NextArrow, PrevArrow } from "./Arrows";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Button from "@/components/Button";
 import Card from "@/components/Card/Card";
 import CardBody from "@/components/Card/CardBody";
@@ -59,52 +62,69 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
 
     const settings = {
         centerMode: true,
+        centerPadding: '100px',
         infinite: true,
-        slidesToShow: 4,
-        speed: 500,
+        slidesToShow: 3,
+        speed: 600,
         draggable: true,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
         beforeChange: (current: number, next: number) => {
             console.log('Before change:', current, next);
             setSelectedTrajectory(next + 1);
             setCurrentSlide(next);
         },
+        appendDots: dots => (
+            <div
+                style={{
+                    padding: "10px"
+                }}
+            >
+                <ul style={{ margin: "0px" }}> {dots} </ul>
+            </div>
+        ),
     };
 
     return (
-        <>
-            {
-                !start ? (
-                    (
-                        <Slider {...settings} >
-                            {trajectory.map((item, index) => {
-                                return (
-
-                                    <div>
-                                        <div key={index} className={`p-2 w-[320px] ${index === currentSlide ? 'border-2 border-yellow-600 rounded-3xl' : ''}`}>
-                                            <div className="rounded-3xl" style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', width: "300px", height: "400px" }}></div>
-                                            {index === currentSlide && (
-                                                <h1 className="text-lg text-center p-2">{item.title}</h1>
-                                            )}
+        <div className="no-overflow">
+            <div className="mt-[15vh] relative max-w-7xl m-auto">
+                {
+                    !start ? (
+                        (
+                            <Slider {...settings} >
+                                {trajectory.map((item, index) => {
+                                    return (
+                                        <div className="flex justify-center items-center" key={index}>
+                                            <div className={`w-[320px] ${index === currentSlide ? 'border-2 border-yellow-600 rounded-3xl' : ''}`}>
+                                                <div className="p-2">
+                                                    <div className="rounded-3xl" style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', width: "300px", height: "400px" }}></div>
+                                                </div>
+                                                {index === currentSlide && (
+                                                    <h1 className="border-t-2 mt-6 border-yellow-600 text-lg text-center tracking-in-expand-fwd p-2">{item.title}</h1>
+                                                )}
+                                            </div>
                                         </div>
+                                    )
+                                })}
+                            </Slider>
+                        )
+                    ) : (
+                        <div className="flex flex-col items-center justify-center h-[60vh]">
+                            <div className="text-6xl font-bold text-white ">
+                                {seconds > 0 ? (
+                                    <div className="text-gray-800 heartbeat w-[100px] h-[100px] p-2 bg-white rounded-full flex justify-center items-center">
+                                        {seconds}
                                     </div>
-                                )
-                            })}
-                        </Slider>
-
-                    )
-                ) : (
-                    <div className="flex flex-col items-center justify-center h-[60vh]">
-                        <div className="text-6xl font-bold text-gray-800 ">
-                            {/* {seconds > 0 ? (
-                                <div className="p-10 bg-white rounded-full">{seconds}</div>
-                                ) : 'Starting!'} */}
-                            <div className="w-8 h-8 bg-white rounded-full">{seconds}</div>
+                                ) : (
+                                    <h1 className="tracking-in-contract">Starting!</h1>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                )
-            }
-            <div className="m-auto p-4 max-w-6xl">
-                <div className=" w-full">
+                    )
+                }
+            </div>
+            <div className="absolute bottom-0 left-20 w-full">
+                <div className="p-4 m-auto max-w-6xl">
                     <div className="flex justify-between items-center p-4 mt-8 max-w-6xl mx-auto">
                         <h3 className="text-lg">You have selected {
                             selectedTrajectory === -1 ? 'No trajectory selected' : trajectory[selectedTrajectory - 1].title
@@ -114,19 +134,20 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
                             {selectedTrajectory === -1 || start ? "" : <Button onClick={startMotionProcess}>Start Motion</Button>}
                             {
                                 start && (
-                                    <Button>
-                                        <Link
-                                            href="/"
-                                        >
+
+                                    <Link
+                                        href="/"
+                                    >
+                                        <Button>
                                             Next
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 )
                             }
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

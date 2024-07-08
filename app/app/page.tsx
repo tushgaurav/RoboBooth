@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <div className="w-screen h-screen" style={{ backgroundImage: `url(/ui_images/app_bg.gif)`, backgroundSize: 'cover' }}>
-      <div className="w-screen h-screen" style={{ backgroundColor: 'rgba(0,0,0, 0.6' }}>
+      <div className="w-screen h-screen" style={{ backgroundColor: 'rgba(0,0,0, 0.8' }}>
         <Nav title="Select Trajectory" />
 
         <div>
