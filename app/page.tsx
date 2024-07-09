@@ -17,11 +17,11 @@ export default function Page() {
             {/* <IntroVideo /> */}
 
             <div className="h-full max-h-[90vh] flex flex-col  items-center justify-end">
-                <Button>
-                    <Link href="/app">
+                <Link href="/app">
+                    <Button>
                         Start Motion
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
             </div>
         </div>
 

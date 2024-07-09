@@ -19,20 +19,28 @@ import Image from "next/image";
 
 export default function SelectTrajectory({ trajectory, server_url }: { trajectory: Trajectory[], server_url: string }) {
     const router = useRouter();
-    const [selectedTrajectory, setSelectedTrajectory] = useState(-1);
+    const [selectedTrajectory, setSelectedTrajectory] = useState(1);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(5);
 
+    console.log(seconds)
+
     useEffect(() => {
         let timer: NodeJS.Timeout;
-        if (start && seconds > 0) {
+        if (start && seconds > -7) {
             timer = setInterval(() => {
                 setSeconds((prevSeconds) => prevSeconds - 1);
             }, 1000);
-        } else if (seconds === 0) {
-            startMotionProcess();
-            sendStartMotionRequest();
+
+            if (seconds == 0) {
+                startMotionProcess();
+                sendStartMotionRequest();
+            }
+
+            if (seconds == -6) {
+                router.push('/');
+            }
         }
         return () => clearInterval(timer);
     }, [start, seconds]);
@@ -95,7 +103,7 @@ export default function SelectTrajectory({ trajectory, server_url }: { trajector
                                 {trajectory.map((item, index) => {
                                     return (
                                         <div className="flex justify-center items-center" key={index}>
-                                            <div className={`w-[320px] ${index === currentSlide ? 'border-2 border-yellow-600 rounded-3xl' : ''}`}>
+                                            <div className={`w-[320px] ${index === currentSlide ? 'border-2 border-yellow-600 bg-gray-950  rounded-3xl' : ''}`}>
                                                 <div className="p-2">
                                                     <div className="rounded-3xl" style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', width: "300px", height: "400px" }}></div>
                                                 </div>
