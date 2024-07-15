@@ -20,11 +20,11 @@ ip = "192.168.1.200"
 
 [[motions]]
 index = 1
-title = "Ariana Grande"
+title = "PhotoFast 1"
 image = "/ui_images/robot_motion/ariana_grande.gif"
 alt = "robot moving"
 description = "Robot follows a straight curve along with some fast paced motion to capture the slowmotion."
-file_name = "birthday.jbi"
+file_name = "photospin2"
 duration = 10
 
 [[motions]]

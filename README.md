@@ -1,7 +1,3 @@
-## TODO
+# RoboLens: Orangewood's Glam Robot
 
-[ ] - Add option for speed.
-[ ] - Integrate iPhone shutter.
-[ ] - Other camera to be added.
-[ ] - 
-
+## Installation

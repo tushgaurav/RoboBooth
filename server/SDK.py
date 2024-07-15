@@ -89,16 +89,16 @@ class Robot:
         else:
             self.sock = None
             return [True, "Robot Disconnect Success, Robot was already disconected."]
-        
+
     # Logging Service
     def getLogs(self) -> str:
         logSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         logSock.settimeout(2)
         logSock.connect((self.ip_address, 8058))
         str1 = "Type=Info\n"
-        logSock.send(str1.encode ())
+        logSock.send(str1.encode())
         str2 = "all\n"
-        logSock.send(str2.encode ())
+        logSock.send(str2.encode())
         while True:
             try:
                 data = logSock.recv(128000)

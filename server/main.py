@@ -1,3 +1,4 @@
+import os
 import uvicorn
 import tomllib
 from pydantic import BaseModel
@@ -20,7 +21,9 @@ class Trajectory(BaseModel):
 
 
 photobot = product2(config["robot"]["ip"])
-# result, _ = photobot.connect()
+
+if (os.environ.get("ENV") != "dev"):
+    result, _ = photobot.connect()
 
 app = FastAPI()
 
@@ -71,6 +74,7 @@ async def motion_list():
 async def start_motion(trajectory: Trajectory):
     file_name = trajectory.file_name
 
+    photobot.setServoStatus(1)
     if (photobot.checkJbiExist(file_name)):
         result = photobot.runJbi(file_name)
         return {"result": result}
